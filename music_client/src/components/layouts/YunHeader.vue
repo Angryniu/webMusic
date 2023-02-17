@@ -5,10 +5,11 @@
             <svg class="icon" aria-hidden="true">
                 <use :href="Icon.ERJI"></use>
             </svg>
+            <span>{{ musicName }}</span>
         </div>
         <!-- 头部导航 -->
         <ul class="yun-header-nav">
-            <li v-for="item in HEADERNAVLIST" :key="item.path">
+            <li v-for="item in HEADERNAVLIST" :key="item.path" :class="{ active: item.name === activeNavName }" @click="goPage(item.name,item.path)">
                 {{item.name}}
             </li>
         </ul>
@@ -16,9 +17,10 @@
         <div class="header-search">
             <el-input placeholder="搜索" :suffix-icon="Search" v-model="keywords" @keyup.enter="goSearch()" />
         </div>
+        <div style="width:1300px"></div>
         <!-- 设置 -->
         <ul class="yun-header-nav">
-            <li v-for="item in SIGNLIST" :key="item.path">
+            <li v-for="item in SIGNLIST" :key="item.path" :class="{ active: item.name === activeNavName }" @click="goPage(item.name,item.path)">
                 {{item.name}}
             </li>
         </ul>
@@ -34,11 +36,30 @@
 </template>
 
 <script lang='ts' setup>
+import { getCurrentInstance, computed} from "vue";
 import {Icon} from "@/enums/icon"
-import {HEADERNAVLIST,SIGNLIST} from "@/enums/nav"
+import {HEADERNAVLIST,SIGNLIST,NavName} from "@/enums/nav"
+import {RouterName} from "@/enums/router-name"
 import { Search } from "@element-plus/icons-vue";
-const url = '@/assets/images/user.jpg'
+import mixin from "@/mixins/mixin";
+import {useStore} from "vuex"
 
+const store = useStore();
+const url = '@/assets/images/user.jpg'
+const musicName = "Yun-music";
+const { changeIndex, routerManager } = mixin();
+const activeNavName = computed(() => store.getters.activeNavName);
+
+function goPage(name,path){
+  console.log(name ,path)
+  if(!name && !path){
+      changeIndex(NavName.Home);
+      routerManager(RouterName.Home, { path: RouterName.Home });
+  }else{
+      changeIndex(name);
+      routerManager(path, { path });
+  }
+}
 </script>
 
 <style lang='scss' scoped>

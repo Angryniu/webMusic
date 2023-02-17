@@ -4,7 +4,7 @@
             <yun-header></yun-header>
         </el-header>
         <el-main>
-            主要类容
+            <router-view />
         </el-main>
         <el-footer>
             尾部

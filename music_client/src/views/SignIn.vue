@@ -5,7 +5,6 @@
             <use :xlink:href="Icon.ERJI"></use>
         </svg>
     </div>
-    <!-- <yin-login-logo></yin-login-logo> -->
   <div class="sign">
     <div class="sign-head">
       <span>帐号登录</span>
@@ -30,10 +29,10 @@ import { defineComponent, reactive, getCurrentInstance } from "vue";
 import mixin from "@/mixins/mixin";
 import {Icon} from "@/enums/icon"
 const { proxy } = getCurrentInstance();
-    const { routerManager, changeIndex } = mixin();
+const { routerManager, changeIndex } = mixin();
 
     // 登录用户名密码
-    const registerForm = reactive({
+const registerForm = reactive({
       username: "",
       password: "",
     });
